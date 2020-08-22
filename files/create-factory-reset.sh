@@ -37,7 +37,7 @@ function main()
 
 IMG_ORIG=${originalimage}.img
 
-IMG_LIVE=${IMG_ORIG}.live.img
+IMG_LIVE=${originalimage}.live.img
 
 IMG_RESTORE=${restoreimage}.restore.img
 

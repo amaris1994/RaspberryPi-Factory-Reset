@@ -1,49 +1,36 @@
-Role Name
-=========
+# Factory Reset Your Raspbian OS    
 
-A brief description of the role goes here.
+### Description:   
+In the normal process to reset or restore the Raspberry Pi OS (Raspbian), you need to unplug the SD Card, format the card, re-write the OS image and plug it back again.  If you are doing some testing or development, it can be a pain to go over this process again. This git contains the scripts using which you can create a Raspberry Pi OS image which has an option to factory reset the OS without plugging out the SD Card.
 
-Requirements
-------------
+## Usage:   
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+1. Clone the git using:   
+```
+git clone https://github.com/shivasiddharth/RaspberryPi-Factory-Reset  
+```   
 
-Role Variables
---------------
+2. Download your preferred live and recovery images, unzip them and place them in the files directory.   
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+3. Change directory using:  
+```   
+cd /home/${USER}/RaspberryPi-Factory-Reset/files/   
+```   
 
-Dependencies
-------------
+4. Make the script executable using:   
+```   
+sudo chmod +x ./create-factory-reset.sh  
+```   
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+5. Execute the script using:   
+```   
+sudo ./create-factory-reset.sh  
+```    
 
-Example Playbook
-----------------
+6. Copy the created image and write it to the SD Card and enjoy.    
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: limepepper.raspberrypi, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
-# ansible-role-raspberrypi
+7. Usage to factory reset:   
+```  
+sudo su -   
+/boot/factory_reset --reset    
+```    

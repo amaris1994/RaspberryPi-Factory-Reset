@@ -4,9 +4,23 @@
 set -eu
 set -o pipefail
 
-# BASE=2018-03-13-raspbian-stretch-lite
-# BASE=2018-06-27-raspbian-stretch-lite
-BASE=2018-10-09-raspbian-stretch-lite
+scripts_dir="$(dirname "${BASH_SOURCE[0]}")"
+GIT_DIR="$(realpath $(dirname ${BASH_SOURCE[0]})/..)"
+
+# make sure we're running as the owner of the checkout directory
+RUN_AS="$(ls -ld "$scripts_dir" | awk 'NR==1 {print $3}')"
+if [ "$USER" != "$RUN_AS" ]
+then
+    echo "This script must run as $RUN_AS, trying to change user..."
+    exec sudo -u $RUN_AS $0
+fi
+
+echo ""
+read -r -p "Enter the fullname of the image that you want to use as the live image (without the img extension): " originalimage
+echo ""
+read -r -p "Enter the fullname of the image that you want to use as the recovery image (without the img extension): " restoreimage
+echo ""
+
 
 MOTD_SHOW_LIVE=""
 SET_PI_PASSWORD=""
@@ -17,11 +31,15 @@ function main()
   pr_header "entering main function"
 
 # paths for base, intermediate and restore images
-IMG_ORIG=${BASE}.img
-[ -f ${IMG_ORIG} ] || { echo "Not found source image '${IMG_ORIG}'" && exit;  }
 
-IMG_RESTORE=${BASE}.restore.img
-IMG_LIVE=${BASE}.live.img
+[ -f ${originalimage}.img ] || { echo "Live image not found '${originalimage}.img'" && exit;  }
+[ -f ${restoreimage}.img ] || { echo "Live image not found '${restoreimage}.img'" && exit;  }
+
+IMG_ORIG=${originalimage}.img
+
+IMG_LIVE=${IMG_ORIG}.live.img
+
+IMG_RESTORE=${restoreimage}.restore.img
 
 # paths to src/dest file that is used for resetting in live image
 RECOVERY_SCRIPT_SOURCE="${DIR}/init_resize2.sh"
@@ -411,7 +429,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-source "${DIR}/display_funcs"
+source "${DIR}/display_funcs.sh"
 
 # if the script failed, cleanup previous run.
 # cleanup

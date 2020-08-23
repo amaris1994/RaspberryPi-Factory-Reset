@@ -38,6 +38,16 @@ IMG_LIVE=${originalimage}.live.img
 
 IMG_RESTORE=${originalimage}.restore.img
 
+IMAGE_FILE_SIZE=$( stat -c %s ${IMG_ORIG} )
+
+echo "Original image size: ${IMAGE_FILE_SIZE}"
+
+echo ""
+
+NEW_FILE_SIZE=$(((( ${IMAGE_FILE_SIZE}*3 ) + ( 512 * 1000 )) / 1024 ))
+
+echo "New image size: ${NEW_FILE_SIZE}K"
+
 # paths to src/dest file that is used for resetting in live image
 RECOVERY_SCRIPT_SOURCE="${DIR}/init_resize2.sh"
 [ -f ${RECOVERY_SCRIPT_SOURCE} ] || { echo "Not found ${RECOVERY_SCRIPT_SOURCE}" && exit;  }
@@ -115,10 +125,10 @@ PTABLE_P3_START=$(( ((((( P2_END * 512 ) / 8192) + 1) * 8192)/512) ))
 [[ -f "${IMG_RESTORE}" ]] && \
 {
   pr_warn "restore file ${IMG_RESTORE} already, exists - overwriting"
-  dd if=/dev/zero bs=4M count=2000 > ${IMG_RESTORE}
+  dd if=/dev/zero bs=1K count=${NEW_FILE_SIZE} > ${IMG_RESTORE}
 } || \
 {
-  dd if=/dev/zero bs=4M count=2000 > ${IMG_RESTORE}
+  dd if=/dev/zero bs=1K count=${NEW_FILE_SIZE} > ${IMG_RESTORE}
   # touch ${IMG_RESTORE}
 }
 

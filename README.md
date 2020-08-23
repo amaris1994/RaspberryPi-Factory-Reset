@@ -10,7 +10,7 @@ In the normal process to reset or restore the Raspberry Pi OS (Raspbian), you ne
 git clone https://github.com/shivasiddharth/RaspberryPi-Factory-Reset  
 ```   
 
-2. Download your preferred live and recovery images, unzip them and place them in the files directory.   
+2. Download your preferred image, unzip them and place them in the files directory.   
 
 3. Change directory using:  
 ```   

@@ -18,7 +18,7 @@ fi
 echo ""
 read -r -p "Enter the fullname of the image that you want to use as the live image (without the img extension): " originalimage
 echo ""
-read -r -p "Enter the fullname of the image that you want to use as the recovery image (without the img extension): " restoreimage
+read -r -p "Enter the fullname of the lite version of the image (without the img extension): " liteimage
 echo ""
 
 
@@ -33,13 +33,13 @@ function main()
 # paths for base, intermediate and restore images
 
 [ -f ${originalimage}.img ] || { echo "Live image not found '${originalimage}.img'" && exit;  }
-[ -f ${restoreimage}.img ] || { echo "Live image not found '${restoreimage}.img'" && exit;  }
+[ -f ${liteimage}.img ] || { echo "Lite image not found '${restoreimage}.img'" && exit;  }
 
 IMG_ORIG=${originalimage}.img
 
-IMG_LIVE=${originalimage}.live.img
+IMG_LIVE=${liteimage}.live.img
 
-IMG_RESTORE=${restoreimage}.restore.img
+IMG_RESTORE=${originalimage}.restore.img
 
 # paths to src/dest file that is used for resetting in live image
 RECOVERY_SCRIPT_SOURCE="${DIR}/init_resize2.sh"
@@ -97,14 +97,14 @@ echo "found root partition at ${PTABLE_P2_START} with size ${PTABLE_P2_SIZE}"
 
 sudo fdisk -l ${IMG_ORIG} | grep 'Sector size'
 
-# set the size of the new recovery partition in bytes
-## $(( 2 * 1024**3 )) e.g. 2GiB
-# this should be a multipe of 512 otherwise bad things might happen
-P2_NEWSIZE_BYTES=2147483648
-
-# how many sectors is that?
+# # set the size of the new recovery partition in bytes
+# ## $(( 2 * 1024**3 )) e.g. 2GiB
+# # this should be a multipe of 512 otherwise bad things might happen
+# P2_NEWSIZE_BYTES=4294967296
+#
+# # how many sectors is that?
 # P2_SECTORS=$(( ${P2_NEWSIZE_BYTES} / 512 ))
-P2_SECTORS=${PTABLE_P2_SIZE}
+P2_SECTORS=2*${PTABLE_P2_SIZE}
 echo "P2 sectors is ${P2_SECTORS}"
 
 P2_END=$(( PTABLE_P2_START + ${P2_SECTORS} ))

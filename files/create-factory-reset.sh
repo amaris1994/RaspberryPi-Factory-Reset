@@ -16,9 +16,7 @@ then
 fi
 
 echo ""
-read -r -p "Enter the fullname of the image that you want to use as the live image (without the img extension): " originalimage
-echo ""
-read -r -p "Enter the fullname of the lite version of the image (without the img extension): " liteimage
+read -r -p "Enter the fullname of the image that you want to use (without the img extension): " originalimage
 echo ""
 
 
@@ -33,11 +31,10 @@ function main()
 # paths for base, intermediate and restore images
 
 [ -f ${originalimage}.img ] || { echo "Live image not found '${originalimage}.img'" && exit;  }
-[ -f ${liteimage}.img ] || { echo "Lite image not found '${restoreimage}.img'" && exit;  }
 
 IMG_ORIG=${originalimage}.img
 
-IMG_LIVE=${liteimage}.live.img
+IMG_LIVE=${originalimage}.live.img
 
 IMG_RESTORE=${originalimage}.restore.img
 

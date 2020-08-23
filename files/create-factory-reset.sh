@@ -101,7 +101,7 @@ sudo fdisk -l ${IMG_ORIG} | grep 'Sector size'
 #
 # # how many sectors is that?
 # P2_SECTORS=$(( ${P2_NEWSIZE_BYTES} / 512 ))
-P2_SECTORS=2*${PTABLE_P2_SIZE}
+P2_SECTORS=$(( ${PTABLE_P2_SIZE}*2 ))
 echo "P2 sectors is ${P2_SECTORS}"
 
 P2_END=$(( PTABLE_P2_START + ${P2_SECTORS} ))

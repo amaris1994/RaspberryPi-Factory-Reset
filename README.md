@@ -5,6 +5,20 @@ In the normal process to reset or restore the Raspberry Pi OS (Raspbian), you ne
 
 ## Usage:   
 
+### Ready to use images:   
+These are based on the May 2020 version of the Raspberry Pi OS.    
+https://mega.nz/folder/akREwKKB#SNdASVnpzOaj7rPtrgPW_w   
+
+### Prepare your own image by following the instructions given below on a linux based system   
+
+************************************************  
+| Image Versions    | Free Space Required       |
+|-------------------|---------------------------|
+| Lite              | 10GB                      |
+| Minimal Desktop   | 14GB                      |    
+| Full Desktop      | 25GB                      |  
+
+
 1. Clone the git using:   
 ```
 git clone https://github.com/shivasiddharth/RaspberryPi-Factory-Reset  
@@ -29,7 +43,7 @@ sudo ./create-factory-reset.sh
 
 6. Copy the created image and write it to the SD Card and enjoy.    
 
-7. Usage to factory reset:   
+## Command to factory reset:   
 ```  
 sudo su -   
 /boot/factory_reset --reset    

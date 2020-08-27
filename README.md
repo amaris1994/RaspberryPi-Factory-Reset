@@ -44,6 +44,7 @@ sudo ./create-factory-reset.sh
 6. Copy the created image and write it to the SD Card and enjoy.    
 
 ## Command to factory reset:   
+************************************************    
 ```  
 sudo su -   
 /boot/factory_reset --reset    
